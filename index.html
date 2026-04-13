@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ДракоЛогика — тренажёр логических выражений</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero" aria-label="Украшение с дракончиком">
+      <div class="hero-copy">
+        <p class="hero-kicker">Алгебра логики</p>
+        <h1>ДракоЛогика</h1>
+        <p class="hero-subtitle">Собирай выражения из кнопок как в калькуляторе и проверяй себя по заданиям из темы диплома.</p>
+      </div>
+      <svg class="dragon-art" viewBox="0 0 1200 300" role="img" aria-label="Морда дракончика и волнистый хребет">
+        <defs>
+          <linearGradient id="ridgeGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#86b049" />
+            <stop offset="50%" stop-color="#6d9d37" />
+            <stop offset="100%" stop-color="#567f2d" />
+          </linearGradient>
+          <linearGradient id="faceGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f7a24c" />
+            <stop offset="100%" stop-color="#ef7f2a" />
+          </linearGradient>
+        </defs>
+
+        <path class="ridge-shadow" d="M0 210 C 75 160, 120 165, 180 210 C 240 255, 300 255, 360 210 C 420 165, 480 165, 540 210 C 600 255, 660 255, 720 210 C 780 165, 840 165, 900 210 C 960 255, 1020 255, 1080 210 C 1130 175, 1160 175, 1200 210 L 1200 300 L 0 300 Z" />
+        <path class="ridge-main" d="M0 194 C 75 144, 120 149, 180 194 C 240 239, 300 239, 360 194 C 420 149, 480 149, 540 194 C 600 239, 660 239, 720 194 C 780 149, 840 149, 900 194 C 960 239, 1020 239, 1080 194 C 1130 159, 1160 159, 1200 194" />
+
+        <g class="dragon-head" transform="translate(930 86)">
+          <ellipse class="head" cx="88" cy="86" rx="88" ry="72" />
+          <ellipse class="snout" cx="156" cy="104" rx="50" ry="36" />
+          <path class="horn" d="M16 38 Q -8 -8 18 -28 Q 38 2 36 44 Z" />
+          <path class="horn" d="M62 20 Q 44 -14 74 -26 Q 94 6 86 34 Z" />
+          <circle class="eye-white" cx="102" cy="70" r="18" />
+          <circle class="eye-pupil" cx="107" cy="74" r="9" />
+          <circle class="nostril" cx="172" cy="104" r="4.8" />
+          <circle class="nostril" cx="182" cy="113" r="4.8" />
+          <path class="smile" d="M130 124 Q 162 144 186 126" />
+          <path class="cheek" d="M98 120 Q 110 134 124 126" />
+        </g>
+      </svg>
+    </header>
+
+    <main class="workspace">
+      <nav class="mode-tabs" aria-label="Режимы">
+        <button class="mode-btn active" data-mode="practice" type="button">Тренажёр</button>
+        <button class="mode-btn" data-mode="quiz" type="button">Викторина на время</button>
+        <button class="mode-btn" data-mode="test" type="button">Тест на 10</button>
+      </nav>
+
+      <section class="task-panel">
+        <div class="status-row">
+          <div class="status-pill">
+            <span>Режим</span>
+            <strong id="modeName">Тренажёр</strong>
+          </div>
+          <div class="status-pill">
+            <span>Таймер</span>
+            <strong id="timerValue">—</strong>
+          </div>
+          <div class="status-pill">
+            <span>Прогресс</span>
+            <strong id="progressValue">0</strong>
+          </div>
+          <div class="status-pill">
+            <span>Очки</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+        </div>
+
+        <article class="prompt-box">
+          <h2>Запиши логическое выражение</h2>
+          <p id="taskPrompt">Нажми «Старт», чтобы начать.</p>
+        </article>
+
+        <section class="answer-box" aria-label="Поле ответа">
+          <div class="answer-label">Твоя запись:</div>
+          <div id="expressionOutput" class="expression-output" aria-live="polite"></div>
+        </section>
+
+        <section class="keypad" aria-label="Кнопки для ввода выражения">
+          <button class="key key-var" data-token="a" type="button">a</button>
+          <button class="key key-var" data-token="b" type="button">b</button>
+          <button class="key key-var" data-token="c" type="button">c</button>
+          <button class="key key-op" data-token="(" type="button">(</button>
+          <button class="key key-op" data-token=")" type="button">)</button>
+
+          <button class="key key-op" data-token="¬" type="button">¬</button>
+          <button class="key key-op" data-token="∧" type="button">∧</button>
+          <button class="key key-op" data-token="∨" type="button">∨</button>
+          <button class="key key-op" data-token="⊕" type="button">⊕</button>
+          <button class="key key-op" data-token="→" type="button">→</button>
+
+          <button class="key key-op" data-token="↔" type="button">↔</button>
+          <button class="key key-action" id="backBtn" type="button">⌫</button>
+          <button class="key key-action" id="clearBtn" type="button">C</button>
+          <button class="key key-action" id="nextBtn" type="button">Следующее</button>
+          <button class="key key-main" id="checkBtn" type="button">Проверить</button>
+        </section>
+
+        <section class="controls-row">
+          <button class="control-btn" id="startRoundBtn" type="button">Старт раунда</button>
+          <button class="control-btn ghost" id="resetModeBtn" type="button">Сбросить режим</button>
+        </section>
+
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <aside class="legend">
+        <h3>Подсказка по символам</h3>
+        <ul>
+          <li><strong>¬a</strong> — не a</li>
+          <li><strong>a ∧ b</strong> — a и b</li>
+          <li><strong>a ∨ b</strong> — a или b</li>
+          <li><strong>a ⊕ b</strong> — исключающее или</li>
+          <li><strong>a → b</strong> — если a, то b</li>
+          <li><strong>a ↔ b</strong> — равносильно</li>
+        </ul>
+      </aside>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
