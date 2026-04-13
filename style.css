@@ -113,49 +113,6 @@ button {
   animation: ridgeMove 8s linear infinite;
 }
 
-.dragon-head {
-  transform-origin: center;
-  animation: bob 2.8s ease-in-out infinite;
-}
-
-.head {
-  fill: url(#faceGradient);
-  stroke: #d56d1f;
-  stroke-width: 4;
-}
-
-.snout {
-  fill: #ffc78f;
-  stroke: #d7772b;
-  stroke-width: 3;
-}
-
-.horn {
-  fill: #6f9638;
-  stroke: #4c6f25;
-  stroke-width: 3;
-}
-
-.eye-white {
-  fill: #fff;
-}
-
-.eye-pupil {
-  fill: #25320e;
-}
-
-.nostril {
-  fill: #9f4f18;
-}
-
-.smile,
-.cheek {
-  fill: none;
-  stroke: #964512;
-  stroke-width: 4;
-  stroke-linecap: round;
-}
-
 .workspace {
   display: grid;
   grid-template-columns: 1fr 280px;
