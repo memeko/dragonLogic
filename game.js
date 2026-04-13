@@ -39,33 +39,60 @@
     };
 
     add(
-      "Пусть A: «Сегодня дождь», B: «Завтра будет снег». Запиши высказывание «Если сегодня дождь, то завтра будет снег» как A→B.",
+      "Пусть a: «Сегодня дождь», b: «Завтра будет снег». Составь формулу для высказывания: «Если сегодня дождь, то завтра будет снег».",
       "a → b",
     );
 
     for (const context of PAIR_CONTEXTS) {
-      const pair = formatPairMapping(context.a, context.b);
-      add(`${pair} Запиши выражение «A и B».`, "a ∧ b");
-      add(`${pair} Запиши выражение «A или B».`, "a ∨ b");
-      add(`${pair} Запиши выражение «не A».`, "¬a");
-      add(`${pair} Запиши выражение «A и не B».`, "a ∧ ¬b");
-      add(`${pair} Запиши выражение «Если A, то B» (A→B).`, "a → b");
-      add(`${pair} Запиши выражение «A тогда и только тогда, когда B».`, "a ↔ b");
-      add(`${pair} Запиши выражение «A исключающее или B».`, "a ⊕ b");
+      const a = normalizePhrase(context.a);
+      const b = normalizePhrase(context.b);
+      const pair = formatPairMapping(a, b);
+      add(`${pair} Составь формулу для высказывания: «${capitalize(a)} и ${b}».`, "a ∧ b");
+      add(`${pair} Составь формулу для высказывания: «${capitalize(a)} или ${b}».`, "a ∨ b");
+      add(`${pair} Составь формулу для высказывания: «Неверно, что ${a}».`, "¬a");
+      add(`${pair} Составь формулу для высказывания: «${capitalize(a)} и неверно, что ${b}».`, "a ∧ ¬b");
+      add(`${pair} Составь формулу для высказывания: «Если ${a}, то ${b}».`, "a → b");
+      add(`${pair} Составь формулу для высказывания: «${capitalize(a)} тогда и только тогда, когда ${b}».`, "a ↔ b");
+      add(`${pair} Составь формулу для высказывания: «Либо ${a}, либо ${b}, но не одновременно».`, "a ⊕ b");
     }
 
     for (const context of TRIPLE_CONTEXTS) {
-      const triple = formatTripleMapping(context.a, context.b, context.c);
-      add(`${triple} Запиши выражение «A и (B или C)».`, "a ∧ (b ∨ c)");
-      add(`${triple} Запиши выражение «(A или B) и C».`, "(a ∨ b) ∧ c");
-      add(`${triple} Запиши выражение «не (A и B)».`, "¬(a ∧ b)");
-      add(`${triple} Запиши выражение «если A и B, то C».`, "(a ∧ b) → c");
-      add(`${triple} Запиши выражение «если A, то (B или C)».`, "a → (b ∨ c)");
-      add(`${triple} Запиши выражение «(A ↔ B) и не C».`, "(a ↔ b) ∧ ¬c");
-      add(`${triple} Запиши выражение «не A влечёт (B и C)».`, "¬a → (b ∧ c)");
-      add(`${triple} Запиши выражение «(A или B) и (не B или C)».`, "(a ∨ b) ∧ (¬b ∨ c)");
-      add(`${triple} Запиши выражение «(A и не B) или (не A и C)».`, "(a ∧ ¬b) ∨ (¬a ∧ c)");
-      add(`${triple} Запиши выражение «не (A и (B или C))».`, "¬(a ∧ (b ∨ c))");
+      const a = normalizePhrase(context.a);
+      const b = normalizePhrase(context.b);
+      const c = normalizePhrase(context.c);
+      const triple = formatTripleMapping(a, b, c);
+
+      add(
+        `${triple} Составь формулу для высказывания: «${capitalize(a)}, и при этом верно хотя бы одно из двух: ${b} или ${c}».`,
+        "a ∧ (b ∨ c)",
+      );
+      add(
+        `${triple} Составь формулу для высказывания: «${capitalize(c)}, и одновременно верно хотя бы одно из двух: ${a} или ${b}».`,
+        "(a ∨ b) ∧ c",
+      );
+      add(`${triple} Составь формулу для высказывания: «Неверно, что одновременно ${a} и ${b}».`, "¬(a ∧ b)");
+      add(`${triple} Составь формулу для высказывания: «Если ${a} и ${b}, то ${c}».`, "(a ∧ b) → c");
+      add(`${triple} Составь формулу для высказывания: «Если ${a}, то ${c} или ${b}».`, "a → (b ∨ c)");
+      add(
+        `${triple} Составь формулу для высказывания: «${capitalize(a)} тогда и только тогда, когда ${b}, и при этом неверно, что ${c}».`,
+        "(a ↔ b) ∧ ¬c",
+      );
+      add(
+        `${triple} Составь формулу для высказывания: «Если неверно, что ${a}, то одновременно ${b} и ${c}».`,
+        "¬a → (b ∧ c)",
+      );
+      add(
+        `${triple} Составь формулу для высказывания: «Верно хотя бы одно из двух: ${a} или ${b}; и одновременно верно, что либо неверно, что ${b}, либо ${c}».`,
+        "(a ∨ b) ∧ (¬b ∨ c)",
+      );
+      add(
+        `${triple} Составь формулу для высказывания: «Либо одновременно ${a} и неверно, что ${b}, либо одновременно неверно, что ${a} и ${c}».`,
+        "(a ∧ ¬b) ∨ (¬a ∧ c)",
+      );
+      add(
+        `${triple} Составь формулу для высказывания: «Неверно, что одновременно ${a} и выполняется хотя бы одно из двух: ${b} или ${c}».`,
+        "¬(a ∧ (b ∨ c))",
+      );
     }
 
     add("Запиши выражение: «(a и b) или (a и c)».", "(a ∧ b) ∨ (a ∧ c)");
@@ -77,11 +104,18 @@
   }
 
   function formatPairMapping(a, b) {
-    return `Пусть A: «${capitalize(a)}», B: «${capitalize(b)}».`;
+    return `Пусть a: «${capitalize(a)}», b: «${capitalize(b)}».`;
   }
 
   function formatTripleMapping(a, b, c) {
-    return `Пусть A: «${capitalize(a)}», B: «${capitalize(b)}», C: «${capitalize(c)}».`;
+    return `Пусть a: «${capitalize(a)}», b: «${capitalize(b)}», c: «${capitalize(c)}».`;
+  }
+
+  function normalizePhrase(text) {
+    if (!text) {
+      return text;
+    }
+    return text.trim().replace(/[.?!]+$/u, "");
   }
 
   function capitalize(text) {
